@@ -1,0 +1,32 @@
+pipeline {
+    agent {label: tomcat}
+		stages {
+			stage(checkout) {
+				steps {
+					git checkout url
+				}
+			}
+			stage(build) {
+				steps {
+					sh "${tool 'Maven'} clean install"
+				}
+			}
+			stage(test) {
+				steps {
+						sh "${tool 'Maven'} test"
+			  }
+			}
+			stage(deploy) {
+				steps {
+					sh "cp /apache-maven-3.9.6/target/sourcecode.war/ /apache-tomcat-3.9.6/weapps/"
+				}
+			}
+		}
+	post actions {
+			success {
+				echo "CICD pipeline succeeded"
+			}
+	}
+}	
+			
+	
