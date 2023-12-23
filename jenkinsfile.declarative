@@ -13,19 +13,19 @@ pipeline {
 			}
 			stage(test) {
 				steps {
-						sh "${tool 'Maven'} test"
-			  }
+				         sh "${tool 'Maven'} test"
+			        }
 			}
 			stage(deploy) {
 				steps {
-					sh "cp /apache-maven-3.9.6/target/sourcecode.war/ /apache-tomcat-3.9.6/weapps/"
+					sh "cp /apache-maven-3.9.6/target/java-tomcat-maven-example.war/ /apache-tomcat-3.9.6/weapps/"
 				}
 			}
 		}
 	post {
-			success {
-				echo "CICD pipeline succeeded"
-			}
+	      success {
+			echo "CICD pipeline succeeded"
+	      }
 	}
 }	
 			
