@@ -1,9 +1,9 @@
 pipeline {
-    agent {label: tomcat}
+    agent any
 		stages {
 			stage(checkout) {
 				steps {
-					git checkout url
+					git clone https://github.com/chaithra0317/java-tomcat-maven-example.git
 				}
 			}
 			stage(build) {
@@ -22,7 +22,7 @@ pipeline {
 				}
 			}
 		}
-	post actions {
+	post {
 			success {
 				echo "CICD pipeline succeeded"
 			}
