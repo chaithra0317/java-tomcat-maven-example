@@ -1,32 +1,22 @@
 pipeline {
     agent any
-		stages {
-			stage(checkout) {
-				steps {
-					git clone https://github.com/chaithra0317/java-tomcat-maven-example.git
-				}
+	stages {
+		stage("checkout") {
+			steps {
+				git clone https://github.com/chaithra0317/java-tomcat-maven-example.git
 			}
-			stage(build) {
-				steps {
-					sh "${tool 'Maven'} clean install"
-				}
+		}
+		stage("build") {
+			steps {
+				sh 'mvn clean package'
 			}
-			stage(test) {
-				steps {
-				         sh "${tool 'Maven'} test"
-			        }
-			}
-			stage(deploy) {
-				steps {
-					sh "cp /apache-maven-3.9.6/target/java-tomcat-maven-example.war/ /apache-tomcat-3.9.6/weapps/"
+		}
+		stage("deploy") {
+			steps {
+				deploy adapters: [tomcat9(credentialsId: 'tomcat-server', path: '', url: 'http://13.232.252.5:8080/')], contextPath: null, war: '**/*.war'
 				}
 			}
 		}
-	post {
-	      success {
-			echo "CICD pipeline succeeded"
-	      }
-	}
 }	
 			
 	
