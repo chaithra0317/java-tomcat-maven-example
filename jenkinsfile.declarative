@@ -3,7 +3,7 @@ pipeline {
 	stages {
 		stage("checkout") {
 			steps {
-				git clone https://github.com/chaithra0317/java-tomcat-maven-example.git
+				checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/chaithra0317/java-tomcat-maven-example.git']])
 			}
 		}
 		stage("build") {
